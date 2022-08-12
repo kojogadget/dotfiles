@@ -1,0 +1,610 @@
+#+title: System Configuration
+#+auto_tangle: t
+
+* Bashrc
+
+~/~/dotfiles/.config/bash/.bashrc: executed by bash(1) for non-login shells. See /usr/share/doc/bash/examples/startup-files (in the package bash-doc) for examples.
+
+** Aliases
+
+*** .bash_aliases
+
+*Alias definitions*
+You may want to put all your additions into a separate file like ~/.bash_aliases, instead of adding them here directly. See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  if [ -f ~/.bash_aliases ]; then
+      . ~/.bash_aliases
+  fi
+
+#+end_src
+
+*** Alert
+
+Add an "alert" alias for long running commands.  Use like so:
+  sleep 10; alert
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+   alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+#+end_src
+
+*** Confirm before overrites
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  alias cp="cp -i"
+  alias mv='mv -i'
+  alias rm='rm -i'
+
+#+end_src
+
+*** Emacs
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  alias em="/usr/bin/emacs -nw"
+  alias emacs="emacsclient -c -a 'emacs'"
+
+#+end_src
+
+*** ls to exa
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+  alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+  alias ll='exa -l --color=always --group-directories-first'  # long format
+  alias lt='exa -aT --color=always --group-directories-first' # tree listing
+  alias l='exa -a | egrep "^\."'
+
+#+end_src
+
+*** Other
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  # enable color support of handy aliases
+  if [ -x /usr/bin/dircolors ]; then
+      test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+      #alias ls='ls --color=auto'
+      #alias dir='dir --color=auto'
+      #alias vdir='vdir --color=auto'
+
+      alias grep='grep --color=auto'
+      alias fgrep='fgrep --color=auto'
+      alias egrep='egrep --color=auto'
+  fi
+
+  # colored GCC warnings and errors
+  #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+#+end_src
+
+** Chroot
+
+Set variable identifying the chroot you work in (used in the prompt below)
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+      debian_chroot=$(cat /etc/debian_chroot)
+  fi
+
+#+end_src
+
+** Colors
+
+Set a fancy prompt (non-color, unless we know we "want" color)
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  case "$TERM" in
+      xterm-color|*-256color) color_prompt=yes;;
+  esac
+
+#+end_src
+
+*** Force Colors
+
+Uncomment for a colored prompt, if the terminal has the capability; turned off by default to not distract the user: the focus in a terminal window should be on the output of commands, not on the prompt
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  #force_color_prompt=yes
+
+  if [ -n "$force_color_prompt" ]; then
+      if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+      else
+    color_prompt=
+      fi
+  fi
+
+  if [ "$color_prompt" = yes ]; then
+      PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  else
+      PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  fi
+  unset color_prompt force_color_prompt
+
+#+end_src
+
+** Completions
+
+Enable programmable completion features (you don't need to enable this, if it's already enabled in /etc/bash~/dotfiles/.config/bash/.bashrc and /etc/profile sources /etc/bash.bashrc).
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+ if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+  fi
+
+#+end_src
+
+** Editor
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  ALTERNATE_EDITOR=""                        # setting for emacsclient
+  EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
+  VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+
+#+end_src
+
+** History
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  HISTCONTROL=ignoredups:erasedups           # no duplicate entries
+  HISTSIZE=1000                              # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+  HISTFILESIZE=2000
+
+#+end_src
+
+** If not running interactively, don't do anything
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  case $- in
+      ,*i*) ;;
+      ,*) return;;
+  esac
+
+#+end_src
+
+** Inputrc
+
+#+begin_src sh :tangle .inputrc
+
+  $include /etc/inputrc
+
+  set completion-ignore-case On
+
+#+end_src
+
+** Less Friendly
+
+Make less more friendly for non-text input files, see lesspipe(1)
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+#+end_src
+
+** Paths
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  if [ -d "$HOME/.bin" ] ;
+  then PATH="$HOME/.bin:$PATH"
+  fi
+
+  if [ -d "$HOME/.local/bin" ] ;
+  then PATH="$HOME/.local/bin:$PATH"
+  fi
+
+  if [ -d "$HOME/Applications" ] ;
+  then PATH="$HOME/Applications:$PATH"
+  fi
+
+  if [ -d "$HOME/.config/adb-fastboot/platform-tools" ] ; then
+      export PATH="$HOME/.config/adb-fastboot/platform-tools:$PATH"
+  fi
+
+#+end_src
+
+** Shopt
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  shopt -s autocd                # change to named directory
+  shopt -s cdspell               # autocorrects cd misspellings
+  shopt -s cmdhist               # save multi-line commands in history as single line
+  shopt -s dotglob
+  shopt -s histappend            # append to the history file, don't overwrite it
+  shopt -s expand_aliases        # expand aliases
+  shopt -s checkwinsize          # checks term size when bash regains control
+
+#+end_src
+
+** Title
+
+#+begin_src sh :tangle ~/dotfiles/.config/bash/.bashrc
+
+  # If this is an xterm set the title to user@host:dir
+  case "$TERM" in
+  xterm*|rxvt*)
+      PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+      ;;
+  ,*)
+      ;;
+  esac
+
+#+end_src
+
+* Profile
+** XDG
+
+#+begin_src sh :tangle .profile
+
+  export XDG_CONFIG_HOME=$HOME/.config
+  export XDG_CACHE_HOME=$HOME/.cache
+  export XDG_DATA_HOME=$HOME/.local/share
+
+#+end_src
+
+** zsh
+
+#+begin_src sh :tangle .profile
+
+  export ZDOTDIR=$HOME/.config/zsh/
+
+#+end_src
+
+* System settings
+** Machines
+
+Enable a multi-system setup with different settings.
+
+*** Per-System Settings
+
+Some settings need to be customized on a per-system basis without tweaking individual configuration files.  Thanks to org-mode's =noweb= functionality, I can define a set of variables that can be tweaked for each system and applied across these configuration files when they get generated.
+
+I also define a function called =kg/system-settings-get= which can retrieve these settings appropriately.
+
+#+begin_src emacs-lisp :tangle ~/dotfiles/.emacs.d/per-system-settings.el :noweb yes
+
+  (require 'map) ;; Needed for map-merge
+
+  (setq kg/system-settings
+    (map-merge
+      'list
+      '((desktop/dpi . 180)
+        (desktop/background . "samuel-ferrara-uOi3lg8fGl4-unsplash.jpg")
+        (emacs/default-face-size . 150)
+        (emacs/variable-face-size . 185)
+        (emacs/fixed-face-size . 130)
+        (polybar/height . 35)
+        (polybar/font-0-size . 18)
+        (polybar/font-1-size . 14)
+        (polybar/font-2-size . 20)
+        (polybar/font-3-size . 13)
+        (dunst/font-size . 20)
+        (dunst/max-icon-size . 88)
+        (vimb/default-zoom . 180)
+        (qutebrowser/default-zoom . 200))
+      <<system-settings>>))
+
+#+end_src
+
+*** Pop!_OS
+
+*System Settings*
+
+#+begin_src emacs-lisp :noweb-ref system-settings :noweb-sep ""
+
+  (when (equal system-name "popos")
+    '((desktop/dpi . 142)
+      (emacs/default-face-size . 150)
+      (emacs/variable-face-size . 185)
+      (emacs/fixed-face-size . 130)))
+
+#+end_src
+
+* zsh
+** Aliases
+
+#+begin_src sh :tangle .config/zsh/zsh-aliases
+
+  #!/bin/sh
+
+  alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
+
+  # confirm before overwriting something
+  alias cp="cp -i"
+  alias mv='mv -i'
+  alias rm='rm -i'
+
+  alias em="/usr/bin/emacs -nw"
+  alias emacs="emacsclient -c -a 'emacs'"
+
+  alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+  alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+  alias ll='exa -l --color=always --group-directories-first'  # long format
+  alias lt='exa -aT --color=always --group-directories-first' # tree listing
+  alias l='exa -a | egrep "^\."'
+
+  # Colorize grep output (good for log files)
+  alias grep='grep --color=auto'
+  alias egrep='egrep --color=auto'
+  alias fgrep='fgrep --color=auto'
+
+#+end_src
+
+** Exports
+
+
+*** History
+
+#+begin_src sh :tangle .config/zsh/zsh-exports
+
+  #!/bin/sh
+  HISTFILE="$XDG_DATA_HOME"/zsh/history
+  HISTSIZE=1000000
+  SAVEHIST=1000000
+
+#+end_src
+
+*** Paths
+
+#+begin_src sh :tangle .config/zsh/zsh-exports
+
+  typeset -U path PATH
+  path=($HOME/.bin $HOME/.local/bin $HOME/Applications $HOME/.config/adb-fastboot/platform-tools $path)
+  export PATH
+
+#+end_src
+
+*** Programs
+
+#+begin_src sh :tangle .config/zsh/zsh-exports
+
+  export ALTERNATE_EDITOR=""                        # setting for emacsclient
+  export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
+  export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+  export BROWSER="firefox"
+
+#+end_src
+
+** Functions
+
+*** Add files
+
+#+begin_src sh :tangle .config/zsh/zsh-functions
+
+  function zsh_add_file() {
+      [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1"
+  }
+
+#+end_src
+
+*** Add plugins
+
+#+begin_src sh :tangle .config/zsh/zsh-functions
+
+  function zsh_add_plugin() {
+      PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+      if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+          # For plugins
+          zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+              zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+      else
+          git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+      fi
+  }
+
+#+end_src
+
+*** Add completions
+
+#+begin_src sh :tangle .config/zsh/zsh-functions
+
+  function zsh_add_completion() {
+      PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+      if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+          # For completions
+          completion_file_path=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+          fpath+="$(dirname "${completion_file_path}")"
+          zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
+      else
+          git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+          fpath+=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+          [ -f $ZDOTDIR/.zccompdump ] && $ZDOTDIR/.zccompdump
+      fi
+      completion_file="$(basename "${completion_file_path}")"
+      if [ "$2" = true ] && compinit "${completion_file:1}"
+  }
+
+#+end_src
+
+** Prompt
+
+#+begin_src sh :tangle .config/zsh/zsh-prompt
+
+  #!/bin/sh
+
+  ## autoload vcs and colors
+  autoload -Uz vcs_info
+  autoload -U colors && colors
+
+  # enable only git
+  zstyle ':vcs_info:*' enable git
+
+  # setup a hook that runs before every ptompt.
+  precmd_vcs_info() { vcs_info }
+  precmd_functions+=( precmd_vcs_info )
+  setopt prompt_subst
+
+  # add a function to check for untracked files in the directory.
+  # from https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
+  zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+  #
+  +vi-git-untracked(){
+      if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+             git status --porcelain | grep '??' &> /dev/null ; then
+          # This will show the marker if there are any untracked files in repo.
+          # If instead you want to show the marker only if there are untracked
+          # files in $PWD, use:
+          #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
+          hook_com[staged]+='!' # signify new files with a bang
+      fi
+  }
+
+  zstyle ':vcs_info:*' check-for-changes true
+  # zstyle ':vcs_info:git:*' formats " %r/%S %b %m%u%c "
+  zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[magenta]%} %b%{$fg[blue]%})"
+
+  # format our main prompt for hostname current folder, and permissions.
+  # PROMPT="%{$fg[green]%}%n@%m %~ %{$reset_color%}%#> "
+  # PROMPT="%B%F{blue}[ %F{#d9d9d9}%n%F{red}@%F{#d9d9d9}%m %B%F{blue}] %(?:%B%F{green}➜ :%B%F{red}➜ )%F{cyan}%~"
+  PROMPT="%B%F{cyan}[ %F{#d9d9d9}%n%F{red}@%F{#d9d9d9}%m %B%F{cyan}] %F{cyan}%~ %(?:%B%F{green}➜:%B%F{red}➜)"
+  PROMPT+="\$vcs_info_msg_0_ "
+  # TODO look into this for more colors
+  # https://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
+  # also ascii escape codes
+
+#+end_src
+
+** Scripts
+*** Plugins update
+
+#+begin_src sh :tangle .bin/zsh-plugins-update
+
+  #!/bin/sh
+
+  find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
+
+#+end_src
+
+** Shell
+*** Set options
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  setopt autocd extendedglob nomatch menucomplete interactive_comments
+  setopt appendhistory
+  unsetopt BEEP
+  stty stop undef # Disable ctrl-s to freeze terminal
+  zle_highlight=('paste:none')
+
+#+end_src
+
+*** Completions
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  autoload -Uz compinit
+  zstyle ':completion:*' menu select
+  zmodload zsh/complist
+  compinit
+  _comp_options+=(globdots)
+
+#+end_src
+
+*** Colors
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  autoload -Uz colors && colors
+
+#+end_src
+
+*** Keybindings
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  bindkey "^p" up-line-or-beginning-search # Up
+  bindkey "^n" down-line-or-beginning-search # Down
+  bindkey "^k" up-line-or-beginning-search # Up
+  bindkey "^j" down-line-or-beginning-search # Down
+
+#+end_src
+
+*** Source files
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  source "$ZDOTDIR/zsh-functions"
+
+  zsh_add_file "zsh-aliases"
+  zsh_add_file "zsh-exports"
+  zsh_add_file "zsh-prompt"
+  zsh_add_file "zsh-vi-mode"
+
+#+end_src
+
+*** Plugins
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  zsh_add_plugin "zsh-users/zsh-autosuggestions"
+  zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+  zsh_add_plugin "hlissner/zsh-autopair"
+  zsh_add_completion "esc/conda-zsh-completion" false
+
+#+end_src
+
+*** Unknown
+
+#+begin_src sh :tangle .config/zsh/.zshrc
+
+  autoload -U up-line-or-beginning-search
+  autoload -U down-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+
+#+end_src
+
+** Vi Mode
+
+#+begin_src sh :tangle .config/zsh/zsh-vi-mode
+
+  bindkey -v
+  export KEYTIMEOUT=1
+
+  # Use vim keys in tab complete menu:
+  bindkey -M menuselect '^h' vi-backward-char
+  bindkey -M menuselect '^k' vi-up-line-or-history
+  bindkey -M menuselect '^l' vi-forward-char
+  bindkey -M menuselect '^j' vi-down-line-or-history
+  bindkey -M menuselect '^[[Z' vi-up-line-or-history
+  bindkey -v '^?' backward-delete-char
+
+  # Change cursor shape for different vi modes.
+  function zle-keymap-select () {
+      case $KEYMAP in
+          vicmd) echo -ne '\e[1 q';;      # block
+          viins|main) echo -ne '\e[5 q';; # beam
+      esac
+  }
+  zle -N zle-keymap-select
+  zle-line-init() {
+      zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+      echo -ne "\e[5 q"
+  }
+  zle -N zle-line-init
+  echo -ne '\e[5 q' # Use beam shape cursor on startup.
+  preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+
+#+end_src

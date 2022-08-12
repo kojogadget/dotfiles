@@ -1,0 +1,6 @@
+.config/git
+.config/vim/.netrwhist
+.config/vim/viminfo
+.config/zsh/plugins
+.emacs.d/per-system-settings.el
+
