@@ -6,6 +6,7 @@ zle_highlight=('paste:none')
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)

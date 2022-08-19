@@ -3,8 +3,8 @@ HISTFILE="$XDG_DATA_HOME"/zsh/history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-typeset -U path PATH
 path=($HOME/.bin $HOME/.local/bin $HOME/Applications $HOME/.config/adb-fastboot/platform-tools $path)
+typeset -U path PATH
 export PATH
 
 export ALTERNATE_EDITOR=""                        # setting for emacsclient

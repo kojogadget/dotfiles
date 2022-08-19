@@ -9,9 +9,10 @@ hc() {
 hc emit_hook reload
 
 xsetroot -solid '#5A8E3A'
+lxsession &
 picom &
 nm-applet &
-setxkbmap -model pc105 -layout no -variant winkeys -option ctrl:nocaps
+# setxkbmap -model pc105 -layout no -variant winkeys -option ctrl:nocaps
 sh /home/kg/.config/polybar/launch.sh
 emacs --daemon
 

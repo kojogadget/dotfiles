@@ -2162,6 +2162,15 @@ Not currently doing any Common Lisp development so these packages are disabled f
 
 #+end_src
 
+*** Lua
+
+#+begin_src emacs-lisp
+
+    (use-package lua-mode
+      :mode "\\.lua\\'")
+
+#+end_src
+
 *** TypeScript and JavaScript
 
 Configure TypeScript and JavaScript language modes

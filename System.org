@@ -353,8 +353,6 @@ I also define a function called =kg/system-settings-get= which can retrieve thes
 #+end_src
 
 ** Exports
-
-
 *** History
 
 #+begin_src sh :tangle .config/zsh/zsh-exports
@@ -370,8 +368,8 @@ I also define a function called =kg/system-settings-get= which can retrieve thes
 
 #+begin_src sh :tangle .config/zsh/zsh-exports
 
-  typeset -U path PATH
   path=($HOME/.bin $HOME/.local/bin $HOME/Applications $HOME/.config/adb-fastboot/platform-tools $path)
+  typeset -U path PATH
   export PATH
 
 #+end_src
@@ -516,6 +514,7 @@ I also define a function called =kg/system-settings-get= which can retrieve thes
 
   autoload -Uz compinit
   zstyle ':completion:*' menu select
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
   zmodload zsh/complist
   compinit
   _comp_options+=(globdots)

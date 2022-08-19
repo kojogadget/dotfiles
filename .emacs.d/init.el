@@ -1387,15 +1387,15 @@ _d_: date        ^ ^              ^ ^
   :disabled
   :hook ((typescript-mode . eglot-ensure)))
 
-;; (use-package dap-mode
-;;   :straight t
-;;   :custom
-;;   (lsp-enable-dap-auto-configure nil)
-;;   :config
-;;   (dap-ui-mode 1)
-;;   (dap-tooltip-mode 1)
-;;   (require 'dap-node)
-;;   (dap-node-setup))
+(use-package dap-mode
+  :straight t
+  :custom
+  (lsp-enable-dap-auto-configure nil)
+  :config
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (require 'dap-node)
+  (dap-node-setup))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -1428,6 +1428,9 @@ _d_: date        ^ ^              ^ ^
 (use-package scheme-mode
   :straight nil
   :mode "\\.sld\\'")
+
+(use-package lua-mode
+  :mode "\\.lua\\'")
 
 (use-package typescript-mode
   :mode "\\.ts\\'"

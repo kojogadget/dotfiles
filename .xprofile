@@ -11,3 +11,7 @@ export INPUTRC="$XDG_CONFIG_HOME/inputrc"
 
 export MYVIMRC='$XDG_CONFIG_HOME/vim/vimrc'
 export VIMINIT='source $MYVIMRC'
+
+# export WINEPREFIX="$XDG_CONFIG_HOME/wine"
+
+setxkbmap -model pc105 -layout no -variant winkeys -option ctrl:nocaps
