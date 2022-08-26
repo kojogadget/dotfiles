@@ -20,7 +20,7 @@ fade_steps=20
 #
 #     m /sys/class/backlight/acpi_video0/brightness 0664 root users - -
 #
-#sysfs_path=/sys/class/backlight/acpi_video0/brightness
+sysfs_path=/sys/class/backlight/intel_backlight/brightness
 
 # Time to sleep (in seconds) between increments when using sysfs. If unset or
 # empty, fading is disabled.

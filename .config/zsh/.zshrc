@@ -13,6 +13,8 @@ _comp_options+=(globdots)
 
 autoload -Uz colors && colors
 
+colorscript random
+
 bindkey "^p" up-line-or-beginning-search # Up
 bindkey "^n" down-line-or-beginning-search # Down
 bindkey "^k" up-line-or-beginning-search # Up

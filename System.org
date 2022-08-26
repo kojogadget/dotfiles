@@ -527,6 +527,8 @@ I also define a function called =kg/system-settings-get= which can retrieve thes
 
   autoload -Uz colors && colors
 
+  colorscript random
+
 #+end_src
 
 *** Keybindings

@@ -5,7 +5,18 @@ import subprocess
 
 from libqtile import qtile
 from libqtile import bar, layout, widget, hook
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule, KeyChord
+from libqtile.config import (
+    Click,
+    Drag,
+    Group,
+    Key,
+    Match,
+    Screen,
+    Rule,
+    KeyChord,
+    ScratchPad,
+    DropDown,
+)
 from libqtile.command import lazy
 from libqtile.lazy import lazy
 from typing import List  # noqa: F401
@@ -18,13 +29,14 @@ sysBin = "/usr/bin/"
 myBin = "/home/kg/.bin/"
 
 mod = "mod4"
-terminal = "alacritty"
+terminal = "kitty"
 myBrowser = "firefox"
 myEditor = "emacsclient -c -a emacs"
 
 keys = [
     ### Essentials
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "t", lazy.spawn(sysBin + "alacritty"), desc="Launch terminal"),
     Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun"), desc="Run Launcher"),
     Key([mod], "b", lazy.spawn(myBrowser), desc="Firefox"),
     Key([mod, "shift"], "e", lazy.spawn(myEditor), desc="Emacs"),
@@ -204,7 +216,7 @@ def get_num_monitors():
 num_monitors = get_num_monitors()
 
 group_names = "dev www sys doc vms chat mus vid gfx".split()
-groups = [Group(name, layout="monadtall") for name in group_names]
+groups = [Group(name, layout="Bsp") for name in group_names]
 for i, name in enumerate(group_names):
     indx = str(i + 1)
     keys += [
@@ -223,14 +235,14 @@ layout_theme = {
 layouts = [
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Bsp(**layout_theme),
+    # layout.Matrix(**layout_theme),
+    # layout.MonadWide(**layout_theme),
+    # layout.RatioTile(**layout_theme),
+    # layout.Tile(**layout_theme),
+    # layout.TreeTab(**layout_theme),
+    layout.VerticalTile(**layout_theme),
+    # layout.Zoomy(**layout_theme),
     layout.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
     layout.Floating(**layout_theme),
@@ -423,6 +435,43 @@ mouse = [
     ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
+
+groups.append(
+    ScratchPad(
+        "scratchpad",
+        [
+            DropDown("term", "alacritty", width=0.4, x=0.3, y=0.2),
+            DropDown("calc", "galculator", width=0.18, x=0.78, y=0.03),
+            DropDown(
+                "mixer", "pavucontrol", width=0.4, height=0.6, x=0.3, y=0.1, opacity=1
+            ),
+            DropDown(
+                "bitwarden",
+                "bitwarden-desktop",
+                width=0.4,
+                height=0.6,
+                x=0.3,
+                y=0.1,
+                opacity=1,
+            ),
+        ],
+    )
+)
+
+keys.extend(
+    [
+        KeyChord(
+            [mod],
+            "d",
+            [
+                Key([], "t", lazy.group["scratchpad"].dropdown_toggle("term")),
+                Key([], "s", lazy.group["scratchpad"].dropdown_toggle("mixer")),
+                Key([], "c", lazy.group["scratchpad"].dropdown_toggle("calc")),
+                Key([], "b", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
+            ],
+        ),
+    ]
+)
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
