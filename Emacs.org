@@ -2030,7 +2030,6 @@ This section contains project configurations for specific projects that I can't 
 #+end_src
 
 ** Languages
-
 *** Language Server Support
 
 #+begin_src emacs-lisp
@@ -2467,7 +2466,6 @@ Sets the background of HTML color strings in buffers to be the color mentioned.
 #+end_src
 
 * Writing
-
 ** Darkroom for distraction-free writing
 
 #+begin_src emacs-lisp
@@ -2495,6 +2493,37 @@ Sets the background of HTML color strings in buffers to be the color mentioned.
 
   (kg/lead-key
     "tf" '(kg/toggle-focus-mode :which-key "focus mode"))
+
+#+end_src
+
+** LaTex
+
+#+begin_src emacs-lisp
+
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("org-plain-latex"
+                   "\\documentclass{article}
+              [NO-DEFAULT-PACKAGES]
+              [PACKAGES]
+              [EXTRA]"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+  (plist-put org-format-latex-options :scale 1.8)
+
+  (define-key org-mode-map (kbd "$") (lambda ()
+                                       (interactive)
+                                       (insert "$")
+                                       (save-excursion
+                                         (left-char 1)
+                                         (if (org-inside-LaTeX-fragment-p)
+                                             (progn
+                                               (right-char 2)
+                                               (org-preview-latex-fragment))))))
 
 #+end_src
 

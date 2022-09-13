@@ -1,4 +1,4 @@
-#files: 973	version: 5.9
+#files: 978	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -95,6 +95,7 @@ _comps=(
 'bindkey' '_bindkey'
 'bison' '_bison'
 'bitcoin-cli' '_bitcoin-cli'
+'blackd' '_black'
 'bluetoothctl' '_bluetoothctl'
 'bmake' '_make'
 'bogofilter' '_bogofilter'
@@ -467,7 +468,6 @@ _comps=(
 'ggetopt' '_getopt'
 'ggrep' '_grep'
 'ggv' '_gnome-gv'
-'_gh' '_gh'
 'gh' '_gh'
 'ghc' '_ghc'
 'ghci' '_ghc'
@@ -738,6 +738,7 @@ _comps=(
 'ldd' '_ldd'
 'less' '_less'
 'let' '_math'
+'lf' '_lf'
 'lftp' '_ncftp'
 'lha' '_lha'
 'libinput' '_libinput'
@@ -936,6 +937,7 @@ _comps=(
 'nmap' '_nmap'
 'nmblookup' '_samba'
 'nmcli' '_networkmanager'
+'nnn' '_nnn'
 'nocorrect' '_precommand'
 'node' '_node'
 'noglob' '_precommand'
@@ -1551,6 +1553,7 @@ _comps=(
 'vcs_info_hookdel' '_vcs_info'
 'vi' '_vi'
 'view' '_vi'
+'vifm' '_vifm'
 'vim' '_vim'
 'vimdiff' '_vim'
 'virsh' '_libvirt'
@@ -1666,6 +1669,7 @@ _comps=(
 'ypxfr' '_yp'
 'ytalk' '_other_accounts'
 'zargs' '_zargs'
+'zathura' '_zathura'
 'zcalc' '_zcalc'
 '-zcalc-line-' '_zcalc_line'
 'zcash-cli' '_zcash-cli'
@@ -1836,47 +1840,48 @@ bindkey '^[/' _history-complete-older
 bindkey '^[~' _bash_complete-word
 
 autoload -Uz _afew _alacritty _android _archlinux-java _artisan \
-            _atach _autorandr _bitcoin-cli _bluetoothctl _bootctl \
-            _bower _bundle _busctl _bwrap _caffeinate \
-            _cap _cargo _cask _ccache _cf \
-            _checkupdates _choc _chromium _cmake _coffee \
-            _composer _conan _concourse _console _coredumpctl \
-            _cppcheck _curl _dad _debuild _dget \
-            _dhcpcd _diana _docpad _drush _ecdsautil \
-            _emulator _envdir _exa _exportfs _fab \
-            _fail2ban-client _ffind _fleetctl _flutter _foot \
-            _footclient _force _fwupdmgr _gas _gh \
-            _ghc _gist _git-flow _git-journal _git-pulls \
-            _git-revise _git-wtf _glances _golang _google \
-            _gpgconf _gtk-launch _hello _hledger _homestead \
-            _hostnamectl _httpie _ibus _include-what-you-use _inxi \
-            _jmeter _jmeter-plugins _jonas _journalctl _jrnl \
-            _kak _kdeconnect _kernel-install _kitchen _kitty \
-            _knife _language_codes _libinput _lilypond _localectl \
-            _loginctl _lunchy _machinectl _mc _meson \
-            _middleman _mina _mix _mkinitcpio _mssh \
-            _mussh _mvn _nano _nanoc _networkctl \
-            _nftables _ninja _node _nvm _oomctl \
-            _openssl _openvpn3 _optirun _opustools _paccache \
-            _pacdiff _paclist _paclog-pkglist _pacman _pacscripts \
-            _pacsearch _pacsort _pactree _patool _perf \
-            _periscope _pgsql_utils _phing _pixz _pkcon \
-            _play _pm2 _polybar _polybar_msg _port \
-            _protoc _pulseaudio _pygmentize _qmk _rails \
-            _ralio _rankmirrors _redis-cli _resolvectl _rfkill \
-            _rkt _rmlint _rslsync _rspec _rsvm \
-            _rubocop _sbt _scala _scrub _sdd \
-            _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files _setcap \
-            _setup.py _sfdx _shellcheck _showoff _srm \
-            _stack _subl _subliminal _supervisorctl _svm \
-            _sway _swaymsg _systemctl _systemd _systemd-analyze \
-            _systemd-delta _systemd-inhibit _systemd-nspawn _systemd-path _systemd-run \
-            _systemd-tmpfiles _tarsnap _teamocil _thor _timedatectl \
-            _tmuxinator _tmuxp _tox _trash _trash-empty \
-            _trash-list _trash-put _trash-restore _udevadm _udisksctl \
-            _ufw _updpkgsums _virtualbox _vnstat _wemux \
-            _wg-quick _xinput _xsel _xss-lock _yaourt \
-            _yarn _yay _zcash-cli _cdr _all_labels \
+            _atach _autorandr _bitcoin-cli _black _bluetoothctl \
+            _bootctl _bower _bundle _busctl _bwrap \
+            _caffeinate _cap _cargo _cask _ccache \
+            _cf _checkupdates _choc _chromium _cmake \
+            _coffee _composer _conan _concourse _console \
+            _coredumpctl _cppcheck _curl _dad _debuild \
+            _dget _dhcpcd _diana _docpad _drush \
+            _ecdsautil _emulator _envdir _exa _exportfs \
+            _fab _fail2ban-client _ffind _fleetctl _flutter \
+            _foot _footclient _force _fwupdmgr _gas \
+            _gh _ghc _gist _git-flow _git-journal \
+            _git-pulls _git-revise _git-wtf _glances _golang \
+            _google _gpgconf _gtk-launch _hello _hledger \
+            _homestead _hostnamectl _httpie _ibus _include-what-you-use \
+            _inxi _jmeter _jmeter-plugins _jonas _journalctl \
+            _jrnl _kak _kdeconnect _kernel-install _kitchen \
+            _kitty _knife _language_codes _lf _libinput \
+            _lilypond _localectl _loginctl _lunchy _machinectl \
+            _mc _meson _middleman _mina _mix \
+            _mkinitcpio _mssh _mussh _mvn _nano \
+            _nanoc _networkctl _nftables _ninja _nnn \
+            _node _nvm _oomctl _openssl _openvpn3 \
+            _optirun _opustools _paccache _pacdiff _paclist \
+            _paclog-pkglist _pacman _pacscripts _pacsearch _pacsort \
+            _pactree _patool _perf _periscope _pgsql_utils \
+            _phing _pixz _pkcon _play _pm2 \
+            _polybar _polybar_msg _port _protoc _pulseaudio \
+            _pygmentize _qmk _rails _ralio _rankmirrors \
+            _redis-cli _resolvectl _rfkill _rkt _rmlint \
+            _rslsync _rspec _rsvm _rubocop _sbt \
+            _scala _scrub _sdd _sd_hosts_or_user_at_host _sd_machines \
+            _sd_outputmodes _sd_unit_files _setcap _setup.py _sfdx \
+            _shellcheck _showoff _srm _stack _subl \
+            _subliminal _supervisorctl _svm _sway _swaymsg \
+            _systemctl _systemd _systemd-analyze _systemd-delta _systemd-inhibit \
+            _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles _tarsnap \
+            _teamocil _thor _timedatectl _tmuxinator _tmuxp \
+            _tox _trash _trash-empty _trash-list _trash-put \
+            _trash-restore _udevadm _udisksctl _ufw _updpkgsums \
+            _vifm _virtualbox _vnstat _wemux _wg-quick \
+            _xinput _xsel _xss-lock _yaourt _yarn \
+            _yay _zathura _zcash-cli _cdr _all_labels \
             _all_matches _alternative _approximate _arg_compile _arguments \
             _bash_completions _cache_invalid _call_function _combination _complete \
             _complete_debug _complete_help _complete_help_generic _complete_tag _comp_locale \

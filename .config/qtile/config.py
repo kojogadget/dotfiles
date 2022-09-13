@@ -215,7 +215,7 @@ def get_num_monitors():
 
 num_monitors = get_num_monitors()
 
-group_names = "dev www sys doc vms chat mus vid gfx".split()
+group_names = "dev www sys doc vms scl mus game div".split()
 groups = [Group(name, layout="Bsp") for name in group_names]
 for i, name in enumerate(group_names):
     indx = str(i + 1)
