@@ -1,0 +1,19 @@
+[font]
+size = 14.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Light"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Light Italic"
+
+[window]
+padding = { x = 8, y = 0 }
+decorations = "None"
+opacity = 0.98

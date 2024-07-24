@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pkill swaybg
+
+swaybg -m fill -i $(find $HOME/Pictures/backgrounds/ -type f \
+			| while read -r img; do
+				echo "$((RANDOM % 1000)):$img";
+			  done | sort -n | cut -d':' -f2- \
+			| head -1)

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+OUTPUTS=$(swaymsg -t get_outputs | jq '.[].name')
+SECOND_MON_NAME=$(swaymsg -t get_outputs | jq -r '.[1].name')
+SECOND_MON_MAKE=$(swaymsg -t get_outputs | jq -r '.[1].make')
+SECOND_MON_MODEL=$(swaymsg -t get_outputs | jq -r '.[1].model')
+NUM_OUTPUTS=$(swaymsg -t get_outputs | jq '.[].name' | wc -l)
+
+if [ $NUM_OUTPUTS -gt 1 ]; then
+    if [ "$SECOND_MON_MAKE" = "Samsung Electric Company" ] && [ "$SECOND_MON_MODEL" = "LC34G55T" ]; then 
+        swaymsg "output $SECOND_MON_NAME res 3440x1440 pos 0 0 scale 1"
+        swaymsg "output eDP-1 pos 3440 850 scale 1.5"
+    fi
+else
+    swaymsg "output eDP-1 pos 0 0 scale 1.5"
+fi
+
+$HOME/.local/scripts/sway-set-bg

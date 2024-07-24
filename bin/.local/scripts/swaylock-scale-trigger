@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pgrep -x swaylock >/dev/null && exit 0
+
+swaymsg 'output eDP-1 scale 1'
+swaylock -c 000000
+swaymsg 'output eDP-1 scale 1.5'
+
