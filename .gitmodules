@@ -1,3 +1,10 @@
 [submodule "nvim/.config/nvim"]
 	path = nvim/.config/nvim
 	url = https://github.com/kojogadget/nvim-config
+[submodule "fzf/.fzf"]
+	path = fzf/.fzf
+	url = https://github.com/junegunn/fzf.git
+	shallow = true
+[submodule "fzf/Projects/builds/fzf-git.sh"]
+	path = fzf/Projects/builds/fzf-git.sh
+	url = https://github.com/junegunn/fzf-git.sh.git
