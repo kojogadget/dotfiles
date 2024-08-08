@@ -1,19 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 if [[ -z $STOW_FOLDERS ]]; then
-    STOW_FOLDERS="bash,bin,nvim,rofi,sway,terms,tmux"
+    STOW_FOLDERS="bash,bin,fzf,nvim,rofi,sway,terms,tmux,zsh"
 fi
 
 if [[ -z $DOTFILES ]]; then
     DOTFILES=$HOME/.dotfiles
 fi
 
-unlink ~/.bashrc || rm ~/.bashrc
-unlink ~/.profile || rm ~/.profile
-unlink ~/.inputrc || rm ~/.inputrc
-
 for folder in $(echo $STOW_FOLDERS | sed "s/,/ /g"); do
     echo "stow $folder"
-    # stow -D $folder
+    stow -D $folder
     stow $folder
 done

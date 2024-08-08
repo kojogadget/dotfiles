@@ -32,6 +32,7 @@ fi
 if [ -d "$HOME/go/bin" ] ; then
     PATH="$HOME/go/bin:$PATH"
 fi
+
 . "$HOME/.cargo/env"
 
 export MOZ_ENABLE_WAYLAND=1
