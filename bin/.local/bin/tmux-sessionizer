@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     session=$1
 else
-    session=$(fd -d 1 -t d -a -H . /home ~ ~/Projects ~/Projects/{work,school,personal} | fzf)
+    session=$(fd -d 1 -t d -a -H . /home ~ ~/Projects ~/Projects/{work,school,personal} ~/Projects/school/* | fzf)
 fi
 
 if [[ -z $session ]]; then

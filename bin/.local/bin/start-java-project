@@ -25,24 +25,13 @@ cat > .project <<EOF
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
-  <filteredResources>
-    <filter>
-      <id>1706344393330</id>
-      <name/>
-      <type>30</type>
-      <matcher>
-        <id>org.eclipse.core.resources.regexFilterMatcher</id>
-        <arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
-      </matcher>
-    </filter>
-  </filteredResources>
 </projectDescription>
 EOF
 
 cat > .classpath <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
     <attributes>
       <attribute name="module" value="true"/>
     </attributes>
