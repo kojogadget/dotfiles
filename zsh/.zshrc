@@ -29,7 +29,8 @@ bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^[b' backward-word
 bindkey '^[f' forward-word
-bindkey '^[[27;5;46~' insert-last-word
+bindkey '^[.' insert-last-word
+# bindkey '^[[27;5;46~' insert-last-word
 bindkey -s '^f' 'tmux-sessionizer\n'
 
 HISTFILE=~/.zsh_history

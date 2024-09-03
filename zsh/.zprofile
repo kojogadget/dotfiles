@@ -29,6 +29,7 @@ fi
 if [ -d "/usr/local/go/bin" ] ; then
     PATH="/usr/local/go/bin:$PATH"
 fi
+
 if [ -d "$HOME/go/bin" ] ; then
     PATH="$HOME/go/bin:$PATH"
 fi
@@ -41,3 +42,5 @@ export VISUAL=nvim
 export BROWSER=firefox
 export HISTSIZE=10000
 export SAVEHIST=10000
+export GOROOT="$HOME/go"
+export GOPATH="$HOME/go/packages"

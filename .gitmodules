@@ -8,3 +8,7 @@
 [submodule "fzf/Projects/builds/fzf-git.sh"]
 	path = fzf/Projects/builds/fzf-git.sh
 	url = https://github.com/junegunn/fzf-git.sh.git
+[submodule "private"]
+	path = private
+	url = git@github.com:kojogadget/private-dotfiles.git
+	ignore = dirty
